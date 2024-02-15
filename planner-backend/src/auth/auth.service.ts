@@ -23,6 +23,15 @@ export class AuthService {
       throw new UnauthorizedException("User or password are incorrect");
   }
 
+  async validateEmail(email: string){
+    try{
+      const result = await this.userService.findEmail(email);
+      return result;
+    }catch(error) {
+      return {message: error.message}
+    }
+}
+
   async login(email: string) {
     const user = await this.userService.findUser(email);
     return {
@@ -37,9 +46,7 @@ export class AuthService {
   }
 
   async register(dto: CreateUserDto) {
-    console.log(dto);
     const user = await this.userService.createUser({email: dto.email, username: dto.username, password: dto.password});
-    console.log(user);
     if(user) {
       return {
         user: {

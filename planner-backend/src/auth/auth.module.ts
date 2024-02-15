@@ -14,12 +14,13 @@ import { AuthController } from './auth.controller';
     UserModule,
     PassportModule,
     JwtModule.registerAsync({
-    inject: [ConfigService],
-    useFactory: async (configService: ConfigService) => ({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
         secret: configService.get('jwtSecret'),
-        signOptions: { expiresIn: '60s' }
-    })})
-    ],
+        signOptions: { expiresIn: '60s' },
+      }),
+    }),
+  ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
 })

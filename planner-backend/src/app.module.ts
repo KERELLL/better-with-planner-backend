@@ -11,16 +11,16 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       load: [config],
-      isGlobal: true
+      isGlobal: true,
     }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],
-      useFactory:async (configService: ConfigService) => ({
-        uri: configService.get('mongoUri')
-      })
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get('mongoUri'),
+      }),
     }),
     AuthModule,
-    UserModule
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
