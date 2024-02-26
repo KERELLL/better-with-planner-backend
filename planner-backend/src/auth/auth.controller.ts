@@ -28,12 +28,12 @@ export class AuthController {
 
   @Post('register')
   async register(
-    @Body() user: { email: string; name: string; password: string },
+    @Body() dto: CreateUserDto,
   ) {
     return await this.authService.register({
-      email: user.email,
-      password: user.password,
-      username: user.name,
+      email: dto.email,
+      password: dto.password,
+      username: dto.username,
     });
   }
 }

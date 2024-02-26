@@ -28,25 +28,27 @@ export class AuthService {
       const result = await this.userService.findEmail(email);
       return result;
     }catch(error) {
-      return {message: error.message}
+      throw error;
     }
 }
 
   async login(email: string) {
     const user = await this.userService.findUser(email);
+    console.log(user);
     return {
       user: {
         email: user.email,
         _id: user._id,
+        name: user.name
       },
       tokens: {
-          accessToken: this.jwtService.sign({email, id: user._id}),
+          accessToken: this.jwtService.sign({email, id: user._id, name: user.name}),
       }
     };
   }
 
   async register(dto: CreateUserDto) {
-    const user = await this.userService.createUser({email: dto.email, username: dto.username, password: dto.password});
+    const user = await this.userService.createUser(dto);
     if(user) {
       return {
         user: {
@@ -59,6 +61,5 @@ export class AuthService {
         }
       }
     }
-    return user;
   }
 }
