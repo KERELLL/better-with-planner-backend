@@ -24,6 +24,7 @@ export class TasksService {
     }
 
     async updateTask(dto: Partial<CreateTaskDto>, taskId: string, userId: string) {
+        const newDate = new Date(dto.createdAt);
         const newTask = await this.taskModel.findOneAndUpdate({
             _id: taskId,
             userId: userId
@@ -31,7 +32,8 @@ export class TasksService {
             ...dto
         })
 
-        console.log(newTask)
+        console.log("new rask", newTask)
+
 
         return newTask;
     }
